@@ -9,9 +9,7 @@ dotenv.config();
 const axiosInstance = axios.create();
 
 const URL: string =
-    process.env.SCRAPE_WEBSITE_URL !== undefined
-        ? process.env.SCRAPE_WEBSITE_URL
-        : "";
+    "https://www.premierleague.com/stats/top/players/goals?se=-1&cl=-1&iso=-1&po=-1?se=-1";
 
 const topScorers: PlayerData[] = [];
 

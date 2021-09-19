@@ -8,8 +8,7 @@
 		"dev": "NODE_ENV=development nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/server.ts",
 		"prebuild": "rm -rf dist/ && prettier --write src/",
 		"build": "tsc",
-		"test": "NODE_ENV=test jest --forceExit --coverage --verbose", 
-		"deploy": "git push heroku master"
+		"test": "NODE_ENV=test jest --forceExit --coverage --verbose"
 	},
 	"devDependencies": {
 		"@types/axios": "^0.14.0",
