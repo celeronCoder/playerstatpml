@@ -6,8 +6,7 @@ import app from "./app";
 
 dotenv.config();
 
-const PORT: number =
-    process.env.PORT === undefined ? 8080 : parseInt(process.env.PORT);
+const PORT = process.env.PORT ?? 8080;
 
 (function start() {
     const httpServer: http.Server = http.createServer(app);
