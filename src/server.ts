@@ -12,7 +12,7 @@ const PORT = process.env.PORT ?? 8080;
     const httpServer: http.Server = http.createServer(app);
 
     if (process.env.NODE_ENV !== "test") {
-        httpServer.listen(PORT, "localhost", () => {
+        httpServer.listen(PORT, () => {
             logger.info(`Server started on port ${PORT}`);
         });
     }
