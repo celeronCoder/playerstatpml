@@ -1,10 +1,18 @@
 import PlayerData from "../src/models/PlayerData";
-import { topScorers } from "../src/utils/scraper";
+import { topAssists, topScorers } from "../src/scraper";
 
-describe("type check of playerData", () => {
-	jest.setTimeout(10000);
-	it("should return topScorers object of type PlayerData", () => {
-		const testScorer: PlayerData[] = [];
-		expect(typeof topScorers).toEqual(typeof testScorer);
-	});
-})
+describe("data check of topScorers", () => {
+    jest.setTimeout(10000);
+    it("should return 20 entries of players", async () => {
+        const data: PlayerData[] = await topScorers();
+        expect(data.length).toBe<number>(20);
+    });
+});
+
+describe("data check of topAssist", () => {
+    jest.setTimeout(10000);
+    it("should return 20 entries of players", async () => {
+        const data: PlayerData[] = await topAssists();
+        expect(data.length).toBe<number>(20);
+    });
+});
