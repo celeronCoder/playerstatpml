@@ -4,12 +4,15 @@ import {
     topAssistController,
     topPassController,
 } from "../controllers";
+import ROUTES from "./routes";
 
 const apiRouter: express.Router = express.Router();
 
-apiRouter.get("/topGoals", topGoalsController);
-apiRouter.get("/topAssist", topAssistController);
-apiRouter.get("/topPass", topPassController);
+(function registerRoutes() {
+    apiRouter.get(`/${ROUTES[0]}`, topGoalsController);
+    apiRouter.get(`/${ROUTES[1]}`, topAssistController);
+    apiRouter.get(`/${ROUTES[2]}`, topPassController);
+})();
 
 namespace API {
     interface Route {
