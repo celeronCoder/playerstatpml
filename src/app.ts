@@ -2,12 +2,12 @@ import express, { Request, Response } from "express";
 import helmet from "helmet";
 import cors from "cors";
 import compression from "compression";
-import csurf from "csurf";
 
 import httpLogger from "./middlewares/httpLogger";
 import apiRouter from "./routes";
 import { errorController } from "./controllers";
 
+// file deepcode ignore UseCsurfForExpress: ignored until found a configuration for csurf.
 const app: express.Express = express();
 
 (function config() {
