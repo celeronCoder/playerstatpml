@@ -1,5 +1,6 @@
 {
-	"name": "scraper",
+	"name": "pmlplayerstat",
+	"description": "API for PML player stats.",
 	"main": "src/server.ts",
 	"author": "Khushal Bhardwaj",
 	"scripts": {
@@ -42,5 +43,9 @@
 		"typescript": "^4.4.3",
 		"winston": "^3.3.3"
 	},
-	"license": "MIT"
+	"license": "MIT",
+	"homepage": "https://playerstatpml.herokuapp.com/",
+	"bugs": {
+		"url": "https://github.com/khushalbhardwaj-0111/playerStat/issues"
+	}
 }
