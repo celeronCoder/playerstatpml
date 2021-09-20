@@ -10,7 +10,6 @@
 		"build": "tsc",
 		"pretest": "tsc -p .",
 		"test": "NODE_ENV=test jest --forceExit --coverage --verbose",
-		"posttest": "nyc report --reporter=json",
 		"publish": "git push heroku master",
 		"log": "heroku logs -t"
 	},
@@ -25,9 +24,7 @@
 		"@types/supertest": "^2.0.11",
 		"@types/winston": "^2.4.4",
 		"chai": "^4.3.4",
-		"codecov": "^3.8.3",
 		"jest": "^27.2.0",
-		"nyc": "^15.1.0",
 		"ts-jest": "^27.0.5"
 	},
 	"dependencies": {
