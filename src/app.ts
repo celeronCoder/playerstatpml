@@ -1,11 +1,11 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import helmet from "helmet";
 import cors from "cors";
 import compression from "compression";
 
 import httpLogger from "./middlewares/httpLogger";
 import apiRouter from "./routes";
-import errorController from "./controllers/errorController";
+import { errorController } from "./controllers";
 
 const app: express.Express = express();
 
