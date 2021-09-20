@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import helmet from "helmet";
 import cors from "cors";
 import compression from "compression";
@@ -14,7 +14,17 @@ const app: express.Express = express();
     app.use(httpLogger);
     app.use(express.urlencoded({ extended: false }));
     app.use(express.json());
-    app.use(compression());
+    app.use(
+        compression({
+            level: 6,
+            filter: (req: Request, res: Response) => {
+                if (req.headers["x-no-compression"]) {
+                    return false;
+                }
+                return compression.filter(req, res);
+            },
+        })
+    );
     app.use(cors());
     app.use(csurf());
     app.use(helmet());
