@@ -26,7 +26,6 @@ const app: express.Express = express();
         })
     );
     app.use(cors());
-    app.use(csurf());
     app.use(helmet());
     app.disable("x-powered-by");
     app.set("trust proxy", 1);
