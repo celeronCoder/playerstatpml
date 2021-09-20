@@ -1,10 +1,7 @@
-import dotenv from "dotenv";
 import http from "http";
 
 import logger from "./utils/logger";
 import app from "./app";
-
-dotenv.config();
 
 const PORT = process.env.PORT ?? 8080;
 
