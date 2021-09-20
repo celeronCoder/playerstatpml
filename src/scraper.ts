@@ -7,7 +7,7 @@ const axiosInstance = axios.create({
     baseURL: "https://www.premierleague.com/stats/top/players",
 });
 
-type scrapeURLType = "goals" | "goal_assist";
+type scrapeURLType = "goals" | "goal_assist" | "total_pass";
 
 async function scrapePlayerData(
     scrapeUrl: scrapeURLType

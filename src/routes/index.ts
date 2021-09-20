@@ -1,10 +1,15 @@
 import express, { Request, Response } from "express";
-import { topGoalsController, topAssistController } from "../controllers";
+import {
+    topGoalsController,
+    topAssistController,
+    topPassController,
+} from "../controllers";
 
 const apiRouter: express.Router = express.Router();
 
 apiRouter.get("/topGoals", topGoalsController);
 apiRouter.get("/topAssist", topAssistController);
+apiRouter.get("/topPass", topPassController);
 
 namespace API {
     interface Route {
