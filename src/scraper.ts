@@ -2,6 +2,7 @@ import axios from "axios";
 import cheerio from "cheerio";
 
 import PlayerData from "./models/PlayerData";
+import topPlayersCategory from "./routes/topPlayersCategory";
 
 const axiosInstance = axios.create({
     baseURL: "https://www.premierleague.com/stats/top/players",
@@ -9,47 +10,52 @@ const axiosInstance = axios.create({
 
 type scrapeURLType = "goals" | "goal_assist" | "total_pass";
 
-async function scrapePlayerData(
-    scrapeUrl: scrapeURLType
-): Promise<PlayerData[]> {
+async function scrapePlayerData(scrapeUrl: string): Promise<PlayerData[]> {
     const data: PlayerData[] = [];
-    await axiosInstance
-        .get(scrapeUrl)
-        .then((response) => {
-            const html = response.data;
-            const $ = cheerio.load(html, { ignoreWhitespace: true });
-            const statsTable: cheerio.Cheerio = $(".statsTableContainer > tr");
-
-            statsTable.each((i, elm) => {
-                const rank: number = parseInt(
-                    $(elm).find(".rank > strong").text()
+    if (topPlayersCategory.includes(scrapeUrl))
+        await axiosInstance
+            .get(scrapeUrl)
+            .then((response) => {
+                const html = response.data;
+                const $ = cheerio.load(html, { ignoreWhitespace: true });
+                const statsTable: cheerio.Cheerio = $(
+                    ".statsTableContainer > tr"
                 );
 
-                const name: string = $(elm).find(".playerName > strong").text();
+                statsTable.each((i, elm) => {
+                    const rank: number = parseInt(
+                        $(elm).find(".rank > strong").text()
+                    );
 
-                const club = $(elm)
-                    .find(".statNameSecondary")
-                    .contents()
-                    .last()
-                    .text()
-                    .trim();
+                    const name: string = $(elm)
+                        .find(".playerName > strong")
+                        .text();
 
-                const nationality: string = $(elm)
-                    .find(".playerCountry")
-                    .text();
+                    const club = $(elm)
+                        .find(".statNameSecondary")
+                        .contents()
+                        .last()
+                        .text()
+                        .trim();
 
-                const goals: number = parseInt($(elm).find(".mainStat").text());
+                    const nationality: string = $(elm)
+                        .find(".playerCountry")
+                        .text();
 
-                data.push({
-                    rank,
-                    name,
-                    club,
-                    nationality,
-                    goals,
+                    const goals: number = parseInt(
+                        $(elm).find(".mainStat").text()
+                    );
+
+                    data.push({
+                        rank,
+                        name,
+                        club,
+                        nationality,
+                        goals,
+                    });
                 });
-            });
-        })
-        .catch(console.error);
+            })
+            .catch(console.error);
 
     return data;
 }
