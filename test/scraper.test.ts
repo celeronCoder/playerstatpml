@@ -1,18 +1,19 @@
 import PlayerData from "../src/models/PlayerData";
+import topPlayersCategory from "../src/routes/topPlayersCategory";
 import scrapePlayerData from "../src/scraper";
 
-describe("data check of topScorers", () => {
+function checkDataOfPlayer(data: string) {
     jest.setTimeout(10000);
-    it("should return 20 entries of players", async () => {
-        const data: PlayerData[] = await scrapePlayerData("goals");
-        expect(data.length).toBe<number>(20);
+    describe(`data check of ${data}`, () => {
+        it("shoul return 20 entries of players", async () => {
+            const playerData: PlayerData[] = await scrapePlayerData(data);
+            expect(playerData.length).toBe<number>(20);
+        });
     });
-});
+}
 
-describe("data check of topAssist", () => {
-    jest.setTimeout(10000);
-    it("should return 20 entries of players", async () => {
-        const data: PlayerData[] = await scrapePlayerData("goal_assist");
-        expect(data.length).toBe<number>(20);
+(function checkDataOfPlayers() {
+    topPlayersCategory.forEach((category) => {
+        checkDataOfPlayer(category);
     });
-});
+})();
