@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import { topPlayersController } from "../controllers";
+import topPlayersCategory from "./topPlayersCategory";
 
 const apiRouter: express.Router = express.Router();
 
@@ -10,6 +11,7 @@ const apiRouter: express.Router = express.Router();
 namespace API {
     interface Route {
         path: string;
+        categories: string[];
         method: "GET" | "POST" | "PUT" | "DELETE";
     }
 
@@ -19,6 +21,7 @@ namespace API {
         for (let i = 0; i < apiRouter.stack.length; i++) {
             routes.push({
                 path: apiRouter.stack[i].route.path,
+                categories: topPlayersCategory,
                 method: apiRouter.stack[i].route.stack[0].method.toUpperCase(),
             });
         }
