@@ -1,26 +1,20 @@
 import axios from "axios";
 import cheerio from "cheerio";
+import ClubData from "./models/ClubData";
 
 import PlayerData from "./models/PlayerData";
 import topPlayersCategory from "./routes/topPlayersCategory";
 
-const axiosInstance = axios.create({
-    baseURL: "https://www.premierleague.com/stats/top/players",
-});
-
-type scrapeURLType = "goals" | "goal_assist" | "total_pass";
-
 async function scrapePlayerData(scrapeUrl: string): Promise<PlayerData[]> {
     const data: PlayerData[] = [];
     if (topPlayersCategory.includes(scrapeUrl))
-        await axiosInstance
-            .get(scrapeUrl)
+        await axios
+            .get(`https://www.premierleague.com/stats/top/players/${scrapeUrl}`)
             .then((response) => {
                 const html = response.data;
                 const $ = cheerio.load(html, { ignoreWhitespace: true });
-                const statsTable: cheerio.Cheerio = $(
-                    ".statsTableContainer > tr"
-                );
+                const statsTable: cheerio.Cheerio = $(".statsTableContainer");
+                console.log(statsTable);
 
                 statsTable.each((i, elm) => {
                     const rank: number = parseInt(
@@ -60,5 +54,38 @@ async function scrapePlayerData(scrapeUrl: string): Promise<PlayerData[]> {
     return data;
 }
 
-export default scrapePlayerData;
-export { scrapeURLType };
+async function scrapeClubData(): Promise<ClubData[]> {
+    const data: ClubData[] = [];
+
+    await axios
+        .get("https://www.premierleague.com/clubs")
+        .then((response) => {
+            const html = response.data;
+            const $ = cheerio.load(html);
+            const clubsTable: cheerio.Cheerio = $(".allTimeDataContainer");
+
+            console.log(clubsTable.children());
+
+            clubsTable.each((i, elm: cheerio.Element) => {
+                const name = $(elm)
+                    .find(".team > a > .nameContainer > .clubName")
+                    .text();
+
+                console.log("name");
+
+                const stadium = $(elm)
+                    .find(".team > a > .nameContainer > .stadiumName")
+                    .text();
+
+                data.push({
+                    name,
+                    stadium,
+                });
+            });
+        })
+        .catch(console.error);
+
+    return data;
+}
+
+export { scrapePlayerData, scrapeClubData };

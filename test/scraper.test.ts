@@ -1,6 +1,6 @@
 import PlayerData from "../src/models/PlayerData";
 import topPlayersCategory from "../src/routes/topPlayersCategory";
-import scrapePlayerData from "../src/scraper";
+import { scrapePlayerData } from "../src/scraper";
 
 function checkDataOfPlayer(data: string) {
     jest.setTimeout(10000);

@@ -1,11 +1,13 @@
 import express, { Request, Response } from "express";
 import { topPlayersController } from "../controllers";
+import clubController from "../controllers/clubController";
 import topPlayersCategory from "./topPlayersCategory";
 
 const apiRouter: express.Router = express.Router();
 
 (function registerRoutes() {
-    apiRouter.get(`/topPlayers/:category`, topPlayersController);
+    apiRouter.get("/topPlayers/:category", topPlayersController);
+    apiRouter.get("/clubs", clubController);
 })();
 
 namespace API {
