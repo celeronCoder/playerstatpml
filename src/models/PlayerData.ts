@@ -3,7 +3,7 @@ interface PlayerData {
     name: string;
     club?: string;
     nationality: string;
-    goals: number;
+    stat: number;
 }
 
 export default PlayerData;

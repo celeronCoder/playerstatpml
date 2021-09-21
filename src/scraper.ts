@@ -1,20 +1,16 @@
 import axios from "axios";
 import cheerio from "cheerio";
+import ClubData from "./models/ClubData";
 
 import PlayerData from "./models/PlayerData";
-import topPlayersCategory from "./routes/topPlayersCategory";
+import topClubsCategory from "./models/topClubsCategory";
+import topPlayersCategory from "./models/topPlayersCategory";
 
-const axiosInstance = axios.create({
-    baseURL: "https://www.premierleague.com/stats/top/players",
-});
-
-type scrapeURLType = "goals" | "goal_assist" | "total_pass";
-
-async function scrapePlayerData(scrapeUrl: string): Promise<PlayerData[]> {
+async function scrapePlayerData(category: string): Promise<PlayerData[]> {
     const data: PlayerData[] = [];
-    if (topPlayersCategory.includes(scrapeUrl))
-        await axiosInstance
-            .get(scrapeUrl)
+    if (topPlayersCategory.includes(category))
+        await axios
+            .get(`https://www.premierleague.com/stats/top/players/${category}`)
             .then((response) => {
                 const html = response.data;
                 const $ = cheerio.load(html, { ignoreWhitespace: true });
@@ -42,7 +38,7 @@ async function scrapePlayerData(scrapeUrl: string): Promise<PlayerData[]> {
                         .find(".playerCountry")
                         .text();
 
-                    const goals: number = parseInt(
+                    const stat: number = parseInt(
                         $(elm).find(".mainStat").text()
                     );
 
@@ -51,7 +47,7 @@ async function scrapePlayerData(scrapeUrl: string): Promise<PlayerData[]> {
                         name,
                         club,
                         nationality,
-                        goals,
+                        stat,
                     });
                 });
             })
@@ -60,5 +56,44 @@ async function scrapePlayerData(scrapeUrl: string): Promise<PlayerData[]> {
     return data;
 }
 
-export default scrapePlayerData;
-export { scrapeURLType };
+async function scrapeClubData(category: string): Promise<ClubData[]> {
+    const data: ClubData[] = [];
+
+    if (topClubsCategory.includes(category))
+        await axios
+            .get(`https://www.premierleague.com/stats/top/clubs/${category}`)
+            .then((response) => {
+                const html = response.data;
+                const $ = cheerio.load(html);
+                const statsTable: cheerio.Cheerio = $(
+                    ".statsTableContainer > tr"
+                );
+                statsTable.each((i, elm: cheerio.Element) => {
+                    const rank: number = parseInt(
+                        $(elm).find("td").first().text()
+                    );
+
+                    const name: string = $(elm)
+                        .find("td")
+                        .first()
+                        .next()
+                        .text()
+                        .trim();
+
+                    const stat: number = parseInt(
+                        $(elm).find(".mainStat").text().replace(/,/g, "")
+                    );
+
+                    data.push({
+                        rank,
+                        name,
+                        stat,
+                    });
+                });
+            })
+            .catch(console.error);
+
+    return data;
+}
+
+export { scrapePlayerData, scrapeClubData };

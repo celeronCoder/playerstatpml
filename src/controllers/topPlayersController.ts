@@ -1,12 +1,13 @@
 import { Request, Response } from "express";
-import topPlayersCategory from "../routes/topPlayersCategory";
-import scrapePlayerData from "../scraper";
+import topPlayersCategory from "../models/topPlayersCategory";
+import { scrapePlayerData } from "../scraper";
 
 async function topPlayersController(req: Request, res: Response) {
     const category: string = req.params.category;
 
     topPlayersCategory.includes(category)
         ? res.status(200).json({
+              //   deepcode ignore Ssrf: <please specify a reason of ignoring this>
               players: await scrapePlayerData(category),
           })
         : res.status(400).json({
