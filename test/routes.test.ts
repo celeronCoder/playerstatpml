@@ -6,7 +6,7 @@ import topPlayersCategory from "../src/models/topPlayersCategory";
 
 function checkRoute(route: string) {
     describe(`GET /api/v1/${route}`, () => {
-        it("shoud return 200 OK", (done) => {
+        it("should return 200 OK", (done) => {
             request(app).get(`/api/v1/${route}`).expect(200, done);
         });
     });
