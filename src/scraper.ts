@@ -3,18 +3,20 @@ import cheerio from "cheerio";
 import ClubData from "./models/ClubData";
 
 import PlayerData from "./models/PlayerData";
-import topPlayersCategory from "./routes/topPlayersCategory";
+import topClubsCategory from "./models/topClubsCategory";
+import topPlayersCategory from "./models/topPlayersCategory";
 
-async function scrapePlayerData(scrapeUrl: string): Promise<PlayerData[]> {
+async function scrapePlayerData(category: string): Promise<PlayerData[]> {
     const data: PlayerData[] = [];
-    if (topPlayersCategory.includes(scrapeUrl))
+    if (topPlayersCategory.includes(category))
         await axios
-            .get(`https://www.premierleague.com/stats/top/players/${scrapeUrl}`)
+            .get(`https://www.premierleague.com/stats/top/players/${category}`)
             .then((response) => {
                 const html = response.data;
                 const $ = cheerio.load(html, { ignoreWhitespace: true });
-                const statsTable: cheerio.Cheerio = $(".statsTableContainer");
-                console.log(statsTable);
+                const statsTable: cheerio.Cheerio = $(
+                    ".statsTableContainer > tr"
+                );
 
                 statsTable.each((i, elm) => {
                     const rank: number = parseInt(
@@ -36,7 +38,7 @@ async function scrapePlayerData(scrapeUrl: string): Promise<PlayerData[]> {
                         .find(".playerCountry")
                         .text();
 
-                    const goals: number = parseInt(
+                    const stat: number = parseInt(
                         $(elm).find(".mainStat").text()
                     );
 
@@ -45,7 +47,7 @@ async function scrapePlayerData(scrapeUrl: string): Promise<PlayerData[]> {
                         name,
                         club,
                         nationality,
-                        goals,
+                        stat,
                     });
                 });
             })
@@ -54,36 +56,42 @@ async function scrapePlayerData(scrapeUrl: string): Promise<PlayerData[]> {
     return data;
 }
 
-async function scrapeClubData(): Promise<ClubData[]> {
+async function scrapeClubData(category: string): Promise<ClubData[]> {
     const data: ClubData[] = [];
 
-    await axios
-        .get("https://www.premierleague.com/clubs")
-        .then((response) => {
-            const html = response.data;
-            const $ = cheerio.load(html);
-            const clubsTable: cheerio.Cheerio = $(".allTimeDataContainer");
+    if (topClubsCategory.includes(category))
+        await axios
+            .get(`https://www.premierleague.com/stats/top/clubs/${category}`)
+            .then((response) => {
+                const html = response.data;
+                const $ = cheerio.load(html);
+                const statsTable: cheerio.Cheerio = $(
+                    ".statsTableContainer > tr"
+                );
+                statsTable.each((i, elm: cheerio.Element) => {
+                    const rank: number = parseInt(
+                        $(elm).find("td").first().text()
+                    );
 
-            console.log(clubsTable.children());
+                    const name: string = $(elm)
+                        .find("td")
+                        .first()
+                        .next()
+                        .text()
+                        .trim();
 
-            clubsTable.each((i, elm: cheerio.Element) => {
-                const name = $(elm)
-                    .find(".team > a > .nameContainer > .clubName")
-                    .text();
+                    const stat: number = parseInt(
+                        $(elm).find(".mainStat").text().replace(/,/g, "")
+                    );
 
-                console.log("name");
-
-                const stadium = $(elm)
-                    .find(".team > a > .nameContainer > .stadiumName")
-                    .text();
-
-                data.push({
-                    name,
-                    stadium,
+                    data.push({
+                        rank,
+                        name,
+                        stat,
+                    });
                 });
-            });
-        })
-        .catch(console.error);
+            })
+            .catch(console.error);
 
     return data;
 }

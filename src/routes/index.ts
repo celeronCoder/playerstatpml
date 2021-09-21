@@ -1,37 +1,30 @@
 import express, { Request, Response } from "express";
-import { topPlayersController } from "../controllers";
-import clubController from "../controllers/clubController";
-import topPlayersCategory from "./topPlayersCategory";
+import { topPlayersController, topClubsController } from "../controllers";
+import topClubsCategory from "../models/topClubsCategory";
+import topPlayersCategory from "../models/topPlayersCategory";
 
 const apiRouter: express.Router = express.Router();
 
 (function registerRoutes() {
     apiRouter.get("/topPlayers/:category", topPlayersController);
-    apiRouter.get("/clubs", clubController);
+    apiRouter.get("/topClubs/:category", topClubsController);
 })();
 
 namespace API {
-    interface Route {
-        path: string;
-        categories: string[];
-        method: "GET" | "POST" | "PUT" | "DELETE";
-    }
-
-    const routes: Route[] = [];
-
-    (function getRoutes() {
-        for (let i = 0; i < apiRouter.stack.length; i++) {
-            routes.push({
-                path: apiRouter.stack[i].route.path,
-                categories: topPlayersCategory,
-                method: apiRouter.stack[i].route.stack[0].method.toUpperCase(),
-            });
-        }
-    })();
-
     export function controller(req: Request, res: Response) {
         return res.status(200).json({
-            routes,
+            topPlayer: {
+                route: "/topPlayers/:category",
+                params: {
+                    category: topPlayersCategory,
+                },
+            },
+            topClub: {
+                route: "/topClubs/:category",
+                params: {
+                    categroy: topClubsCategory,
+                },
+            },
         });
     }
 }

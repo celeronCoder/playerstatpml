@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import topPlayersCategory from "../routes/topPlayersCategory";
+import topPlayersCategory from "../models/topPlayersCategory";
 import { scrapePlayerData } from "../scraper";
 
 async function topPlayersController(req: Request, res: Response) {

@@ -1,4 +1,4 @@
-const topPlayersCategory: string[] = [
+const topPlayersCategory: Array<string> = [
     "goals",
     "goal_assist",
     "total_pass",

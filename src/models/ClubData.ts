@@ -1,6 +1,7 @@
 interface ClubData {
+    rank: number;
     name: string;
-    stadium: string;
+    stat: number;
 }
 
 export default ClubData;

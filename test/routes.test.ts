@@ -1,7 +1,8 @@
 import request from "supertest";
 
 import app from "../src/app";
-import topPlayersCategory from "../src/routes/topPlayersCategory";
+import topClubsCategory from "../src/models/topClubsCategory";
+import topPlayersCategory from "../src/models/topPlayersCategory";
 
 function checkRoute(route: string) {
     describe(`GET /api/v1/${route}`, () => {
@@ -14,5 +15,9 @@ function checkRoute(route: string) {
 (function checkRoutes() {
     topPlayersCategory.forEach((category) => {
         checkRoute(`topPlayers/${category}`);
+    });
+
+    topClubsCategory.forEach((category) => {
+        checkRoute(`topClubs/${category}`);
     });
 })();
