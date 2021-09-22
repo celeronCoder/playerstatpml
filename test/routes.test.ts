@@ -5,6 +5,7 @@ import topClubsCategory from "../src/models/topClubsCategory";
 import topPlayersCategory from "../src/models/topPlayersCategory";
 
 function checkRoute(route: string) {
+    jest.setTimeout(10000);
     describe(`GET /api/v1/${route}`, () => {
         it("should return 200 OK", (done) => {
             request(app).get(`/api/v1/${route}`).expect(200, done);
