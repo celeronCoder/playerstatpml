@@ -1,13 +1,22 @@
 import express, { Request, Response } from "express";
 import { topPlayersController, topClubsController } from "../controllers";
+import cacheMiddleWare from "../middlewares/cacheMiddleware";
 import topClubsCategory from "../models/topClubsCategory";
 import topPlayersCategory from "../models/topPlayersCategory";
 
 const apiRouter: express.Router = express.Router();
 
 (function registerRoutes() {
-    apiRouter.get("/topPlayers/:category", topPlayersController);
-    apiRouter.get("/topClubs/:category", topClubsController);
+    apiRouter.get(
+        "/topPlayers/:category",
+        cacheMiddleWare("topPlayer"),
+        topPlayersController
+    );
+    apiRouter.get(
+        "/topClubs/:category",
+        cacheMiddleWare("topClub"),
+        topClubsController
+    );
 })();
 
 namespace API {

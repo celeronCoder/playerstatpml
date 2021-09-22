@@ -3,7 +3,7 @@ import helmet from "helmet";
 import cors from "cors";
 import compression from "compression";
 
-import httpLogger from "./middlewares/httpLogger";
+import { httpLogger } from "./middlewares";
 import apiRouter from "./routes";
 import { errorController } from "./controllers";
 

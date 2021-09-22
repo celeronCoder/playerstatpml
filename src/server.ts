@@ -1,6 +1,6 @@
 import http from "http";
 
-import logger from "./utils/logger";
+import { Logger } from "./utils";
 import app from "./app";
 
 const PORT = process.env.PORT ?? 8080;
@@ -10,7 +10,7 @@ const PORT = process.env.PORT ?? 8080;
 
     if (process.env.NODE_ENV !== "test") {
         httpServer.listen(PORT, () => {
-            logger.info(`Server started on port ${PORT}`);
+            Logger.info(`Server started on port ${PORT}`);
         });
 
         process.on("exit", () => httpServer.close());
