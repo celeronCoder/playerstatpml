@@ -12,6 +12,8 @@ const PORT = process.env.PORT ?? 8080;
         httpServer.listen(PORT, () => {
             logger.info(`Server started on port ${PORT}`);
         });
+
+        process.on("exit", () => httpServer.close());
     }
 })();
 
