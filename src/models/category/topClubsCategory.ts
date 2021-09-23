@@ -1,4 +1,6 @@
-const topClubsCategory: Array<string> = [
+import { removeDuplicate } from "../../utils";
+
+let topClubsCategory: Array<string> = [
     "wins",
     "losses",
     "touches",
@@ -20,6 +22,30 @@ const topClubsCategory: Array<string> = [
     "penalty_save",
     "total_high_claim",
     "punches",
+    "total_sub_on",
+    "ontarget_scoring_att",
+    "att_hd_goal",
+    "att_pen_goal",
+    "att_freekick_goal",
+    "att_ibox_goal",
+    "goal_fastbreak",
+    "goals_conceded",
+    "outfielder_block",
+    "interception",
+    "last_man_tackle",
+    "total_clearance",
+    "head_clearance",
+    "offside_provoked",
+    "penalty_conceded",
+    "pen_goals_conceded",
+    "fouls",
+    "total_through_ball",
+    "total_long_balls",
+    "backward_pass",
+    "total_cross",
+    "corner_taken",
 ];
+
+topClubsCategory = removeDuplicate(topClubsCategory);
 
 export default topClubsCategory;
