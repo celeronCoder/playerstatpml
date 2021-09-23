@@ -4,7 +4,7 @@ import { cpus } from "os";
 import process from "process";
 import throng from "throng";
 
-import logger from "./utils/logger";
+import { Logger } from "./utils";
 import app from "./app";
 
 const PORT = process.env.PORT ?? 8080;
@@ -14,12 +14,12 @@ const WORKERS: number = parseInt(`${process.env.WEB_CONCURRENCY}`) || 1;
 namespace Server {
     export function start(): void {
         if (cluster.isPrimary) {
-            logger.debug(`Primary ${process.pid} is running.`);
+            Logger.debug(`Primary ${process.pid} is running.`);
 
             // keep track of http requests.
             let numReqs = 0;
             setInterval(() => {
-                logger.debug(`Number of requests: ${numReqs}`);
+                Logger.debug(`Number of requests: ${numReqs}`);
             });
 
             // count requests.
@@ -33,10 +33,10 @@ namespace Server {
 
                 worker.on("exit", (code: number, signal: string) => {
                     if (signal)
-                        logger.debug(`Worker was killed by signal: ${signal}.`);
+                        Logger.debug(`Worker was killed by signal: ${signal}.`);
                     else if (code !== 0)
-                        logger.debug(`Worker exited with error code: ${code}.`);
-                    else logger.debug("Worker success!");
+                        Logger.debug(`Worker exited with error code: ${code}.`);
+                    else Logger.debug("Worker success!");
                 });
             }
 
@@ -45,12 +45,12 @@ namespace Server {
             }
 
             cluster.on("exit", (worker, code, signal) => {
-                logger.debug(`Worker ${worker.process.pid} died.`);
+                Logger.debug(`Worker ${worker.process.pid} died.`);
             });
         } else {
             createServer();
 
-            logger.debug(`Worker ${process.pid} started.`);
+            Logger.debug(`Worker ${process.pid} started.`);
         }
     }
 
@@ -59,7 +59,7 @@ namespace Server {
 
         if (process.env.NODE_ENV !== "test") {
             httpServer.listen(PORT, () => {
-                logger.info(`Server started on port ${PORT}`);
+                Logger.info(`Server started on port ${PORT}`);
             });
 
             process.on("exit", () => httpServer.close());

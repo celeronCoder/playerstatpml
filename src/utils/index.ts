@@ -1,2 +1,2 @@
-export { default as removeDuplicate } from "./getDuplicate";
+export { default as removeDuplicate } from "./removeDuplicates";
 export { default as Logger } from "./logger";
