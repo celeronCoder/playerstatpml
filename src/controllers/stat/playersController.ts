@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import topPlayersCategory from "../models/topPlayersCategory";
-import { scrapePlayerData } from "../scraper";
+import topPlayersCategory from "../../models/category/topPlayersCategory";
+import { scrapePlayerData } from "../../scraper/stat";
 
 async function topPlayersController(req: Request, res: Response) {
     const category: string = req.params.category;

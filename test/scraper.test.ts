@@ -1,8 +1,10 @@
-import ClubData from "../src/models/ClubData";
-import PlayerData from "../src/models/PlayerData";
-import topClubsCategory from "../src/models/topClubsCategory";
-import topPlayersCategory from "../src/models/topPlayersCategory";
-import { scrapeClubData, scrapePlayerData } from "../src/scraper";
+import {
+    topClubsCategory,
+    topPlayersCategory,
+    ClubData,
+    PlayerData,
+} from "../src/models";
+import { scrapeClubData, scrapePlayerData } from "../src/scraper/stat";
 
 function checkDataOfPlayer(data: string) {
     jest.setTimeout(10000);
