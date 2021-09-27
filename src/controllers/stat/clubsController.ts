@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { scrapeClubData } from "../scraper";
+import { scrapeClubData } from "../../scraper/stat";
 
 async function topClubsController(req: Request, res: Response) {
     const category: string = req.params.category;
