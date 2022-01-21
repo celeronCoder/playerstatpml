@@ -14,13 +14,13 @@ namespace API {
     export function controller(req: Request, res: Response) {
         return res.status(200).json({
             topPlayer: {
-                route: "/stats/top/players/:category",
+                route: "/api/v1/stats/top/players/:category",
                 params: {
                     category: topPlayersCategory,
                 },
             },
             topClub: {
-                route: "/stats/top/players/:category",
+                route: "/api/v1/stats/top/players/:category",
                 params: {
                     categroy: topClubsCategory,
                 },
