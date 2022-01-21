@@ -1,7 +1,5 @@
 import express, { Request, Response } from "express";
-import { topPlayersController, topClubsController } from "../controllers";
-import topClubsCategory from "../models/category/topClubsCategory";
-import topPlayersCategory from "../models/category/topPlayersCategory";
+import { topPlayersController, topClubsController, categoryController } from "../controllers";
 
 namespace API {
     export const apiRouter: express.Router = express.Router();
@@ -9,20 +7,21 @@ namespace API {
     (function registerRoutes() {
         apiRouter.get("/stats/top/players/:category", topPlayersController);
         apiRouter.get("/stats/top/clubs/:category", topClubsController);
+		apiRouter.get("/category/:type", categoryController);
     })();
 
-    export function controller(req: Request, res: Response) {
+    export function controller(_req: Request, res: Response) {
         return res.status(200).json({
             topPlayer: {
                 route: "/api/v1/stats/top/players/:category",
                 params: {
-                    category: topPlayersCategory,
+                    category: "/api/v1/category/players",
                 },
             },
             topClub: {
                 route: "/api/v1/stats/top/players/:category",
                 params: {
-                    categroy: topClubsCategory,
+                    categroy: "/api/v1/category/clubs",
                 },
             },
         });
