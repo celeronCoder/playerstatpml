@@ -6,10 +6,7 @@ async function topPlayersController(req: Request, res: Response) {
     const category: string = req.params.category;
 
     topPlayersCategory.includes(category)
-        ? res.status(200).json({
-              //   deepcode ignore Ssrf: <please specify a reason of ignoring this>
-              players: await scrapePlayerData(category),
-          })
+        ? res.status(200).json(await scrapePlayerData(category))
         : res.status(400).json({
               message: "bad request",
           });
