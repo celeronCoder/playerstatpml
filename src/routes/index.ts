@@ -19,7 +19,7 @@ namespace API {
                 },
             },
             topClub: {
-                route: "/api/v1/stats/top/players/:category",
+                route: "/api/v1/stats/top/clubs/:category",
                 params: {
                     categroy: "/api/v1/category/clubs",
                 },
