@@ -1,9 +1,11 @@
 import {
-    topClubsCategory,
-    topPlayersCategory,
     ClubData,
     PlayerData,
 } from "../src/models";
+import {
+	topClubsCategory,
+    topPlayersCategory,
+} from "../src/models/category";
 import { scrapeClubData, scrapePlayerData } from "../src/scraper/stat";
 
 namespace DataCheck {

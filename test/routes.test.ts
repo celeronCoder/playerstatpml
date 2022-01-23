@@ -1,7 +1,7 @@
 import request from "supertest";
 
 import app from "../src/app";
-import { topClubsCategory, topPlayersCategory } from "../src/models/";
+import { topClubsCategory, topPlayersCategory } from "../src/models/category";
 
 function checkRoute(route: string) {
     describe(`GET /api/v1/${route}`, () => {
