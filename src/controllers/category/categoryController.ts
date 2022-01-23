@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { topClubsCategory, topPlayersCategory } from "../models";
+import { topClubsCategory, topPlayersCategory } from "../../models/category";
 
 async function categoryController(req: Request, res: Response) {
 	let categoryType: any = req.params.type;
