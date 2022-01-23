@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { topPlayersController, topClubsController, categoryController } from "../controllers";
+import { topPlayersController, topClubsController, categoryController, categoryTypeController } from "../controllers";
 
 namespace API {
     export const apiRouter: express.Router = express.Router();
@@ -7,6 +7,7 @@ namespace API {
     (function registerRoutes() {
         apiRouter.get("/stats/top/players/:category", topPlayersController);
         apiRouter.get("/stats/top/clubs/:category", topClubsController);
+		apiRouter.get("/category/types", categoryTypeController);
 		apiRouter.get("/category/:type", categoryController);
     })();
 

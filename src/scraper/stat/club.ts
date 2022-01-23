@@ -1,4 +1,5 @@
-import { ClubData, topClubsCategory } from "../../models";
+import { ClubData } from "../../models";
+import { topClubsCategory } from "../../models/category";
 
 import axios from "axios";
 import cheerio from "cheerio";
