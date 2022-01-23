@@ -1,4 +1,5 @@
-import { PlayerData, topPlayersCategory } from "../../models";
+import { PlayerData } from "../../models";
+import { topPlayersCategory } from "../../models/category";
 
 import axios from "axios";
 import cheerio from "cheerio";
