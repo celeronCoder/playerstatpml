@@ -1,4 +1,4 @@
-# solid-goggles
+# playerstatpml
 
 It is an `express-typescript` api or proxy that returns the stats provided by the Premier League.
 
